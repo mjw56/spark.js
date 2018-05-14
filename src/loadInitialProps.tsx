@@ -1,7 +1,7 @@
-import { matchPath, RouteProps } from 'react-router-dom';
+import { matchPath, Route } from 'inferno-router';
 
 export async function loadInitialProps(
-  routes: RouteProps[],
+  routes: Route[],
   pathname: string,
   ctx: any
 ) {

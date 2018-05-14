@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Component as InfernoComponent, VNode } from 'inferno';
 
 export interface AsyncRouteComponentProps {
   isInitialRender: boolean;
@@ -6,26 +6,29 @@ export interface AsyncRouteComponentProps {
 }
 
 export interface AsyncRouteComponentState {
-  Component: React.ReactNode | null;
+  Component: VNode | null;
 }
 /**
  * Returns a new React component, ready to be instantiated.
  * Note the closure here protecting Component, and providing a unique
  * instance of Component to the static implementation of `load`.
  */
-export function asyncComponent<Props = any>({
+export function asyncComponent({
   loader,
   Placeholder,
 }: {
   loader: () => Promise<any>;
-  Placeholder?: React.ComponentType<Props>;
-}) {
+  Placeholder?: any
+}): any {
   let Component: any = null; // keep Component in a closure to avoid doing this stuff more than once
-  return class AsyncRouteComponent extends React.Component<
-    // AsyncRouteComponentProps,
-    any,
+  return class AsyncRouteComponent extends InfernoComponent<
+    AsyncRouteComponentProps,
     AsyncRouteComponentState
   > {
+    state = {
+      Component: null
+    };
+
     /**
      * Static so that you can call load against an uninstantiated version of
      * this component. This should only be called one time outside of the

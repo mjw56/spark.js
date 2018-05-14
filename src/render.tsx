@@ -1,14 +1,15 @@
-import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
-import Helmet from 'react-helmet';
-import { matchPath, RouteProps, StaticRouter } from 'react-router-dom';
+import { Component, ComponentClass } from 'inferno';
+import { renderToString } from 'inferno-server';
+// import Helmet from 'inferno-helmet';
+import { matchPath, StaticRouter, Route } from 'inferno-router';
+
 import { Document as DefaultDoc } from './Document';
 import { After } from './After';
 import { loadInitialProps } from './loadInitialProps';
 import * as utils from './utils';
 import * as url from 'url';
 
-const modPageFn = (Page: React.ComponentType<any>) => (props: any) => (
+const modPageFn = (Page: ComponentClass) => (props: any) => (
   <Page {...props} />
 );
 
@@ -24,8 +25,8 @@ export type AfterRenderProps<T> = T & {
   res: any;
   assets: any;
   customRenderer?: Function;
-  routes: Partial<RouteProps>[];
-  document?: React.ComponentType<any>;
+  routes: Partial<Route>[];
+  document?: Component
 };
 
 export async function render<T>(options: AfterRenderProps<T>) {
@@ -40,10 +41,10 @@ export async function render<T>(options: AfterRenderProps<T>) {
   } = options as any;
   const Doc = Document || DefaultDoc;
   const context = {};
-  const renderPage = async (fn = modPageFn) => {
+  const renderPage = async (fn: Function = modPageFn) => {
 
     // By default, we keep ReactDOMServer synchronous renderToString function
-    const defaultRenderer = (element: React.ReactElement<any>) => ({ html: ReactDOMServer.renderToString(element) });
+    const defaultRenderer = (element: ComponentClass) => ({ html: renderToString(element) });
     const renderer = customRenderer || defaultRenderer;
     const asyncOrSyncRender = renderer(
       <StaticRouter location={req.url} context={context}>
@@ -53,7 +54,9 @@ export async function render<T>(options: AfterRenderProps<T>) {
 
     // if the rendered content is a promise, we wait for it to finish
     const renderedContent = utils.isPromise(asyncOrSyncRender) ? await asyncOrSyncRender : asyncOrSyncRender;
-    const helmet = Helmet.renderStatic();
+    // const helmet = Helmet.renderStatic();
+    // @todo: helmet
+    const helmet = '';
     return { helmet, ...renderedContent }
   };
 
@@ -84,7 +87,8 @@ export async function render<T>(options: AfterRenderProps<T>) {
     match: reactRouterMatch,
   });
 
-  const doc = ReactDOMServer.renderToStaticMarkup(<Doc {...docProps} />);
+  const doc = renderToString(<Doc {...docProps} />);
+
   return (
     `<!doctype html>` +
     doc.replace('DO_NOT_DELETE_THIS_YOU_WILL_BREAK_YOUR_APP', html)
