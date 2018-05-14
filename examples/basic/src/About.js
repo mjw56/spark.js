@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'inferno';
 
-class About extends React.Component {
-  static async getInitialProps({ req, res, match, history, location, ...ctx }) {
+class About extends Component {
+  static getInitialProps({ req, res, match, history, location, ...ctx }) {
     return { stuff: 'more stuffs' };
   }
   render() {

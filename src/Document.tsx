@@ -1,17 +1,19 @@
-import * as React from 'react';
+import { Component } from 'inferno';
 import serialize from 'serialize-javascript';
 
-export class Document extends React.Component<any, any> {
+export class Document extends Component<any, any> {
   static async getInitialProps({ assets, data, renderPage }: any) {
     const page = await renderPage();
     return { assets, data, ...page };
   }
 
   render() {
-    const { helmet, assets, data } = this.props;
+    const { /* helmet, */ assets, data } = this.props;
     // get attributes from React Helmet
-    const htmlAttrs = helmet.htmlAttributes.toComponent();
-    const bodyAttrs = helmet.bodyAttributes.toComponent();
+    // const htmlAttrs = helmet.htmlAttributes.toComponent();
+    // const bodyAttrs = helmet.bodyAttributes.toComponent();
+    const htmlAttrs = {};
+    const bodyAttrs = {};
 
     return (
       <html {...htmlAttrs}>
@@ -20,9 +22,9 @@ export class Document extends React.Component<any, any> {
           <meta charSet="utf-8" />
           <title>Welcome to the Afterparty</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          {helmet.title.toComponent()}
+          {/* {helmet.title.toComponent()}
           {helmet.meta.toComponent()}
-          {helmet.link.toComponent()}
+          {helmet.link.toComponent()} */}
           {assets.client.css && (
             <link rel="stylesheet" href={assets.client.css} />
           )}

@@ -1,8 +1,9 @@
-import * as React from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Component } from 'inferno';
+import { createElement } from 'inferno-create-element';
+import { Switch, Route, withRouter } from 'inferno-router';
 import { loadInitialProps } from './loadInitialProps';
 
-class Afterparty extends React.Component<any, any> {
+class Afterparty extends Component<any, any> {
   prefetcherCache: any;
   constructor(props: any) {
     super(props);
@@ -64,7 +65,7 @@ class Afterparty extends React.Component<any, any> {
             exact={r.exact}
             location={previousLocation || location}
             render={props =>
-              React.createElement(r.component, {
+              createElement(r.component, {
                 ...initialData,
                 history: props.history,
                 location: previousLocation || location,

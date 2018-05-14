@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import { Component } from 'inferno-component';
 import logo from './react.svg';
 import './Home.css';
-import { Link } from 'react-router-dom';
+import { Link } from 'inferno-router';
 
 class Home extends Component {
-  static async getInitialProps({ req, res, match, history, location, ...ctx }) {
-    return { stuff: 'whatevs' };
+  static async getInitialProps({ req, res, match, history, location }) {
+    const stuff = await Promise.resolve({ hello: 'world' });
+    return stuff;
   }
   render() {
     console.log(this.props);
@@ -20,7 +21,7 @@ class Home extends Component {
           <code>src/Home.js</code> or <code>src/About.js</code>and save to
           reload.
         </p>
-        <Link to="/about">About -></Link>
+        <Link to="/about">About</Link>
       </div>
     );
   }
