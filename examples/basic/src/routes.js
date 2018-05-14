@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { asyncComponent } from '@jaredpalmer/after';
+import asyncComponent from '../../../asyncComponent';
 
 export default [
   {
