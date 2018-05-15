@@ -1,7 +1,6 @@
 import { render } from 'inferno';
 import { BrowserRouter } from 'inferno-router';
-import After from '../../../after';
-import { ensureReady } from '../../../ensureReady';
+import { After, ensureReady } from '@mikedub/spark.js';
 import './client.css';
 import routes from './routes';
 

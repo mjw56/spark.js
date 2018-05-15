@@ -1,5 +1,5 @@
 import express from 'express';
-import { render } from '../../../render';
+import { render } from '@mikedub/spark.js';
 import routes from './routes';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
