@@ -1,10 +1,8 @@
-![repo-banner](https://user-images.githubusercontent.com/4060187/34948491-454de294-f9db-11e7-8fc5-86985ba05be8.png)
+# Spark.js
 
-# After.js
+This is a fork of [After.js](https://github.com/jaredpalmer/after.js) but tweaked slightly to work out of the box with [Inferno](https://github.com/infernojs/inferno)!
 
-[![Known Vulnerabilities](https://snyk.io/test/github/jaredpalmer/after.js/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jaredpalmer/after.js?targetFile=package.json)
-
-If [Next.js](https://github.com/zeit/next.js) and [React Router](https://github.com/reacttraining/react-router) had a baby...
+One cool thing about the [Inferno](https://github.com/infernojs/inferno) library is that it's API is aligned a lot with [React](https://github.com/facebook/react). Similarly, Inferno's [Router](https://github.com/infernojs/inferno/tree/master/packages/inferno-router) is a fork of [React Router 4](https://github.com/ReactTraining/react-router)!
 
 ## Project Goals / Philosophy / Requirements
 
@@ -63,10 +61,10 @@ Results are made available on `this.props`.
 
 ```js
 // ./src/About.js
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Component } from 'inferno-component';
+import { Link } from 'inferno-router';
 
-class About extends React.Component {
+class About extends Component {
   static async getInitialProps({ req, res, match }) {
     const stuff = await CallMyApi();
     return { stuff };
@@ -75,8 +73,8 @@ class About extends React.Component {
   render() {
     return (
       <div>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/about">About</NavLink>
+        <Link to="/">Home</NavLink>
+        <Link to="/about">About</NavLink>
         <h1>About</h1>
         {this.props.stuff ? this.props.stuff : 'Loading...'}
       </div>
@@ -140,10 +138,10 @@ export default routes;
 
 ```js
 // ./src/Detail.js
-import React from 'react';
-import NavLink from 'react-router-dom/NavLink';
+import { Component } from 'inferno-component';
+import { Route } from 'inferno-router';
 
-class Detail extends React.Component {
+class Detail extends Component {
   // Notice that this will be called for
   // /detail/:id
   // /detail/:id/more
@@ -189,9 +187,8 @@ After.js lets you easily define lazy-loaded or code-split routes in your `_route
 
 ```js
 // ./src/_routes.js
-import React from 'react';
 import Home from './Home';
-import { asyncComponent } from '@jaredpalmer/after';
+import { asyncComponent } from '@mikedub/spark';
 
 export default [
   // normal route
@@ -218,10 +215,10 @@ After.js works similarly to Next.js with respect to overriding HTML document str
 
 ```js
 // ./src/Document.js
-import React from 'react';
-import { AfterRoot, AfterData } from '@jaredpalmer/after';
+import { Component } from 'inferno-component';
+import { AfterRoot, AfterData } from '@mikedub/spark';
 
-class Document extends React.Component {
+class Document extends Component {
   static async getInitialProps({ assets, data, renderPage }) {
     const page = await renderPage();
     return { assets, data, ...page };
@@ -269,11 +266,11 @@ If you were using something like `styled-components`, and you need to wrap you e
 
 ```js
 // ./src/Document.js
-import React from 'react';
+import { Component } from 'inferno-component';
 import { ServerStyleSheet } from 'styled-components'
-import { AfterRoot, AfterData } from '@jaredpalmer/after';
+import { AfterRoot, AfterData } from '@mikedub/spark';
 
-export default class Document extends React.Component {
+export default class Document extends Component {
   static async getInitialProps({ assets, data, renderPage }) {
     const sheet = new ServerStyleSheet()
     const page = await renderPage(App => props => sheet.collectStyles(<App {...props} />))
@@ -320,7 +317,7 @@ To use your custom `<Document>`, pass it to the `Document` option of your After.
 ```js
 // ./src/server.js
 import express from 'express';
-import { render } from '@jaredpalmer/after';
+import { render } from '@mikedub/spark';
 import routes from './routes';
 import MyDocument from './Document';
 
@@ -366,10 +363,9 @@ Example :
 
 ```js
 // ./src/server.js
-import React from 'react';
 import express from 'express';
-import { render } from '@jaredpalmer/after';
-import { renderToString } from 'react-dom/server';
+import { render } from '@mikedub/spark';
+import { renderToString } from 'inferno-router';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import routes from './routes';
 import createApolloClient from './createApolloClient';
@@ -414,6 +410,7 @@ export default server;
 ## Author
 
 * Jared Palmer [@jaredpalmer](https://twitter.com/jaredpalmer)
+* Mike Wilcox [@infil00ps](https://twitter.com/infil00ps)
 
 ## Inspiration
 
