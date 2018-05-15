@@ -188,7 +188,7 @@ After.js lets you easily define lazy-loaded or code-split routes in your `_route
 ```js
 // ./src/_routes.js
 import Home from './Home';
-import { asyncComponent } from '@mikedub/spark';
+import { asyncComponent } from '@mikedub/spark.js';
 
 export default [
   // normal route
@@ -216,7 +216,7 @@ After.js works similarly to Next.js with respect to overriding HTML document str
 ```js
 // ./src/Document.js
 import { Component } from 'inferno-component';
-import { AfterRoot, AfterData } from '@mikedub/spark';
+import { AfterRoot, AfterData } from '@mikedub/spark.js';
 
 class Document extends Component {
   static async getInitialProps({ assets, data, renderPage }) {
@@ -268,7 +268,7 @@ If you were using something like `styled-components`, and you need to wrap you e
 // ./src/Document.js
 import { Component } from 'inferno-component';
 import { ServerStyleSheet } from 'styled-components'
-import { AfterRoot, AfterData } from '@mikedub/spark';
+import { AfterRoot, AfterData } from '@mikedub/spark.js';
 
 export default class Document extends Component {
   static async getInitialProps({ assets, data, renderPage }) {
@@ -317,7 +317,7 @@ To use your custom `<Document>`, pass it to the `Document` option of your After.
 ```js
 // ./src/server.js
 import express from 'express';
-import { render } from '@mikedub/spark';
+import { render } from '@mikedub/spark.js';
 import routes from './routes';
 import MyDocument from './Document';
 
@@ -364,7 +364,7 @@ Example :
 ```js
 // ./src/server.js
 import express from 'express';
-import { render } from '@mikedub/spark';
+import { render } from '@mikedub/spark.js';
 import { renderToString } from 'inferno-router';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import routes from './routes';
