@@ -1,4 +1,4 @@
-import asyncComponent from '../../../asyncComponent';
+import { asyncComponent } from '@mikedub/spark.js';
 
 export default [
   {
